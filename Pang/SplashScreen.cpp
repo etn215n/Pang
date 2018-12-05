@@ -2,11 +2,28 @@
 
 void SplashScreen::Show(sf::RenderWindow &window)
 {
-	sf::Image backgroundTexture;
+	sf::Texture backgroundTexture;
 
-	/*if (backgroundTexture.loadFromFile("Summer Forest.jpg") == false)
-	{
-		std::cout << "Failed" << std::endl;
+	if (backgroundTexture.loadFromFile(FilePath::GetAssetPath("Summer Forest.jpg")) == false)
 		return;
-	}*/
+
+	sf::Sprite sprite(backgroundTexture);
+
+	window.draw(sprite);
+	window.display();
+
+	sf::Event windowEvent;
+
+	while (true)
+	{
+		while (window.pollEvent(windowEvent))
+		{
+			if (windowEvent.type == sf::Event::EventType::Closed
+			 || windowEvent.type == sf::Event::EventType::KeyPressed
+			 || windowEvent.type == sf::Event::EventType::MouseButtonPressed)
+			{
+				return;
+			}
+		}
+	}
 }
